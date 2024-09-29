@@ -9,6 +9,8 @@ window.addEventListener("load", async () => {
     floor.y = appSize.height - 64
     trees.y = appSize.height - 64 - 322
 
+    await samurai()
+
     app.stage.addChild(
         background,
         floor,
