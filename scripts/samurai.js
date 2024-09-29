@@ -5,7 +5,7 @@ const samurai = async () => {
         size: 128,
     }
 
-    const samuraiIdle = await createAnimation('images/samurai/Idle.png', player.size * 6, player.size, 6)
+    const samuraiIdle = await createAnimation('images/samurai/Idle_right.png', player.size * 6, player.size, 6)
     samuraiIdle.zIndex = player.zIndex
     samuraiIdle.y = player.y
     samuraiIdle.play()

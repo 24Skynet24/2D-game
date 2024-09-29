@@ -5,7 +5,7 @@ const createAnimation = async (img, w, h, framesNum, animSpeed = .16) => {
         meta: {
             image: img,
             format: 'RGBA8888',
-            size: {w: w, h: h},
+            size: {w, h},
             scale: 1
         },
         animations: {

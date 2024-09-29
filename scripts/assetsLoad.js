@@ -8,8 +8,8 @@ const assetsLoad = async () => {
         'images/objects/trees.png',
 
         // Samurai
-        'images/samurai/Idle.png',
-        'images/samurai/Walk.png',
+        'images/samurai/Idle_right.png',
+        'images/samurai/Walk_right.png',
     ])
 }
 
