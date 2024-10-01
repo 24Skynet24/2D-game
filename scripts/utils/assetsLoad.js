@@ -12,6 +12,7 @@ export default async () => {
         // Samurai
         'images/samurai/Idle_right.png',
         'images/samurai/Walk_right.png',
+        'images/samurai/Run_right.png',
     ])
 }
 

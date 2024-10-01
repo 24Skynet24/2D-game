@@ -8,6 +8,7 @@ const appSize = {
 }
 
 const player = {
+    x: 0,
     y: appSize.height - 48 - 128,
     zIndex: 2,
     size: 128,
