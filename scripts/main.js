@@ -1,9 +1,9 @@
 import * as PIXI from "./pixi.min.mjs"
 import assetsLoad from "./utils/assetsLoad.js"
 import {appSize, app} from "./utils/constants.js"
-import Samurai from "./entities/samurai.js"
-import gameLoop from "./gameLoop.js"
-import {setKey} from "./utils/keys.js"
+import {setKey} from "./utils/keyboard.js"
+import Game from "./Game.js"
+import Samurai from "./entities/Samurai.js"
 
 
 window.addEventListener("load", async () => {
@@ -11,28 +11,17 @@ window.addEventListener("load", async () => {
         width: appSize.width,
         height: appSize.height,
     })
-    document.body.appendChild(app.view)
 
     await assetsLoad()
 
-    const background = PIXI.Sprite.from('images/backgrounds/background1.png')
-    const floor = PIXI.Sprite.from( 'images/objects/floor.png')
-    const trees = PIXI.Sprite.from('images/objects/trees.png')
-
-    floor.y = appSize.height - 64
-    trees.y = appSize.height - 64 - 322
-
     const player = new Samurai()
-    await player.createSamurai()
-
-    app.stage.addChild(
-        background,
-        floor,
-        trees,
-    )
+    const game = new Game(player)
+    await game.createGame()
 
     document.addEventListener('keydown', e => setKey(e.keyCode))
     document.addEventListener('keyup', e => setKey(e.keyCode, false))
 
-    await gameLoop(player)
+    document.body.appendChild(app.view)
+
+    app.ticker.add(await game.updateGame, game)
 })
