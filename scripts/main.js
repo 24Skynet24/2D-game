@@ -1,7 +1,7 @@
 import * as PIXI from "./pixi.min.mjs"
 import assetsLoad from "./utils/assetsLoad.js"
 import {appSize, app} from "./utils/constants.js"
-import samurai from "./entities/samurai.js"
+import Samurai from "./entities/samurai.js"
 
 
 window.addEventListener("load", async () => {
@@ -20,7 +20,8 @@ window.addEventListener("load", async () => {
     floor.y = appSize.height - 64
     trees.y = appSize.height - 64 - 322
 
-    await samurai()
+    const player = new Samurai()
+    await player.createIdleRight()
 
     app.stage.addChild(
         background,

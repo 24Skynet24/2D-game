@@ -1,17 +1,22 @@
 import {createAnimation} from "../utils/createAnimation.js"
-import {appSize, app} from "../utils/constants.js"
+import {player, app} from "../utils/constants.js"
 
-export default async () => {
-    const player = {
-        y: appSize.height - 48 - 128,
-        zIndex: 2,
-        size: 128,
+export default class Samurai {
+    constructor() {
+        this.idleRight = null
+        this.idleLeft = null
     }
 
-    const samuraiIdle = await createAnimation('images/samurai/Idle_right.png', player.size * 6, player.size, 6)
-    samuraiIdle.zIndex = player.zIndex
-    samuraiIdle.y = player.y
-    samuraiIdle.play()
+    async createIdleRight() {
+        this.idleRight = await createAnimation('images/samurai/Idle_right.png', player.size * 6, player.size, 6)
+        this.idleRight.zIndex = player.zIndex
+        this.idleRight.y = player.y
 
-    app.stage.addChild(samuraiIdle)
+        this.animPlay(this.idleRight)
+    }
+
+    animPlay(anim) {
+        anim.play()
+        app.stage.addChild(anim)
+    }
 }

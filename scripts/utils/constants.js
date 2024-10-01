@@ -7,9 +7,14 @@ const appSize = {
     height: 720,
 }
 
-
+const player = {
+    y: appSize.height - 48 - 128,
+    zIndex: 2,
+    size: 128,
+}
 
 export {
     app,
-    appSize
+    appSize,
+    player,
 }
