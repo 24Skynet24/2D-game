@@ -1,4 +1,7 @@
-const samurai = async () => {
+import {createAnimation} from "../utils/createAnimation.js"
+import {appSize, app} from "../utils/constants.js"
+
+export default async () => {
     const player = {
         y: appSize.height - 48 - 128,
         zIndex: 2,

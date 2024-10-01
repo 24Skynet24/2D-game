@@ -1,4 +1,6 @@
-const assetsLoad = async () => {
+import * as PIXI from "../pixi.min.mjs"
+
+export default async () => {
     await PIXI.Assets.load([
         // Backgrounds
         'images/backgrounds/background1.png',

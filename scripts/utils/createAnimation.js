@@ -1,3 +1,5 @@
+import * as PIXI from "../pixi.min.mjs"
+
 const createAnimation = async (img, w, h, framesNum, animSpeed = .16) => {
     const frameSize = 128
     const animFormat = {
@@ -32,4 +34,8 @@ const createAnimation = async (img, w, h, framesNum, animSpeed = .16) => {
     anim.animationSpeed = animSpeed
 
     return anim
+}
+
+export {
+    createAnimation
 }
