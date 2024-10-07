@@ -18,9 +18,9 @@ export default class Samurai {
         this.sprite = null
     }
 
-    #positionUpdate(anim) {
-        anim.x = this.x
-        anim.y = this.y
+    positionUpdate() {
+        this.sprite.x = this.x
+        this.sprite.y = this.y
     }
     async #setAnimation() {
         switch (this.state) {
@@ -41,10 +41,11 @@ export default class Samurai {
                 if (this.oldState === 'run') return
                 app.stage.removeChild(this.sprite)
                 if (this.direction) this.sprite = await createAnimation('images/samurai/Run_right.png', 1024, 128, 8)
+                else this.sprite = await createAnimation('images/samurai/Run_left.png', 1024, 128, 8)
                 break
         }
 
-        this.#positionUpdate(this.sprite)
+        this.positionUpdate()
         this.sprite.play()
         app.stage.addChild(this.sprite)
     }
@@ -52,7 +53,7 @@ export default class Samurai {
 
     async createSamurai() {
         this.sprite = await createAnimation('images/samurai/Idle_right.png', 768, 128, 6)
-        this.#positionUpdate(this.sprite)
+        this.positionUpdate()
         this.sprite.zIndex = 2
         this.sprite.play()
         app.stage.addChild(this.sprite)
