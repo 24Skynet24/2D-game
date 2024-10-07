@@ -27,23 +27,29 @@ export default class Game {
         this.player.oldDirection = this.player.direction
         this.player.oldState = this.player.state
 
-        // Left
-        if (keys[68]) {
+        // Right
+        if (keys[68] && !keys[65]) {
             if (this.player.state !== 'walk') this.player.state = 'walk'
             if (!this.player.direction) this.player.direction = true
+            this.player.x += 1
         }
-        // Right
-        if (keys[65]) {
+        // Left
+        if (keys[65] && !keys[68]) {
             if (this.player.state !== 'walk') this.player.state = 'walk'
             if (this.player.direction) this.player.direction = false
+            this.player.x -= 1
         }
         // Run
-        if (keys[16] && this.player.state !== 'run') this.player.state = 'run'
+        if (keys[16] && this.player.state !== 'run' && (keys[65] || keys[68])) {
+            this.player.state = 'run'
+            this.player.direction ? this.player.x += 2 : this.player.x -= 2
+        }
         // Idle
-        if (!keys[68] && !keys[65] && !keys[16]) {
+        if (!keys[68] && !keys[65]) {
             if (this.player.state !== 'idle') this.player.state = 'idle'
         }
 
+        this.player.positionUpdate()
         await this.player.updatePlayer()
     }
 }
