@@ -14,7 +14,7 @@ window.addEventListener("load", async () => {
 
     await assetsLoad()
 
-    const player = new Samurai()
+    const player = new Samurai(0, appSize.height - 48 - 128)
     const game = new Game(player)
     await game.createGame()
 

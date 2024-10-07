@@ -1,65 +1,64 @@
+import * as PIXI from "../pixi.min.mjs"
 import {createAnimation} from "../utils/createAnimation.js"
-import {entitiesParams, app} from "../utils/constants.js"
+import {app} from "../utils/constants.js"
 
 export default class Samurai {
-    constructor() {
-        this.params = entitiesParams
-        this.status = {
-            "RIGHT": true,
-            "LEFT": false,
-            "WALK": false,
-            "RUN": false,
-            "JUMP": false,
-            "ATTACK": false,
-            "DAMAGE": false,
-            "DEATH": false,
-            "FLY": false,
+    constructor(x, y) {
+        this.x = x
+        this.y = y
+
+        // Statuses
+        this.oldState = null
+        this.state = 'idle'  // idle, walk, run
+        this.oldDirection = true
+        this.direction = true  // right - true, left - false
+
+
+        // Animation
+        this.sprite = null
+    }
+
+    #positionUpdate(anim) {
+        anim.x = this.x
+        anim.y = this.y
+    }
+    async #setAnimation() {
+        switch (this.state) {
+            case 'walk':
+                if (this.oldState === 'walk' && this.oldDirection === this.direction) return
+                app.stage.removeChild(this.sprite)
+                if (this.direction) this.sprite = await createAnimation('images/samurai/Walk_right.png', 1152, 128, 9)
+                else this.sprite = await createAnimation('images/samurai/Walk_left.png', 1152, 128, 9)
+                break
+
+            case 'idle':
+                if (this.oldState === 'idle') return
+                app.stage.removeChild(this.sprite)
+                if (this.direction) this.sprite = await createAnimation('images/samurai/Idle_right.png', 768, 128, 6)
+                else this.sprite = await createAnimation('images/samurai/Idle_left.png', 768, 128, 6)
+                break
+            case 'run':
+                if (this.oldState === 'run') return
+                app.stage.removeChild(this.sprite)
+                if (this.direction) this.sprite = await createAnimation('images/samurai/Run_right.png', 1024, 128, 8)
+                break
         }
 
-        this.idleRight = null
-        this.idleLeft = null
-        this.walkRight = null
-        this.walkLeft = null
+        this.#positionUpdate(this.sprite)
+        this.sprite.play()
+        app.stage.addChild(this.sprite)
     }
 
-    // Animation Add / Remove / Create
-    async #getAnim(img, frames) {
-        const anim = await createAnimation(img, entitiesParams.size * frames, entitiesParams.size, frames)
-        anim.y = this.params.y
-        anim.x = this.params.x
-        anim.zIndex = this.params.zIndex
-        return anim
-    }
-    addAnim(anim) {
-        app.stage.addChild(anim)
-        anim.play()
-    }
-    removeAnim(anim){
-        app.stage.removeChild(anim)
-    }
 
     async createSamurai() {
-        this.idleRight = await this.#getAnim('images/samurai/Idle_right.png', 6)
-        this.walkRight = await this.#getAnim('images/samurai/Walk_right.png', 8)
-        this.walkLeft = await this.#getAnim('images/samurai/Walk_left.png', 8)
-        this.addAnim(this.idleRight)
+        this.sprite = await createAnimation('images/samurai/Idle_right.png', 768, 128, 6)
+        this.#positionUpdate(this.sprite)
+        this.sprite.zIndex = 2
+        this.sprite.play()
+        app.stage.addChild(this.sprite)
     }
 
-    async walk() {
-        // if (this.status["RIGHT"]) {
-        //     this.removeAnim(this.idleRight)
-        //     this.removeAnim(this.walkLeft)
-        //     this.addAnim(this.walkRight)
-        // }
-        // else if (this.status["LEFT"]) {
-        //     this.removeAnim(this.idleRight)
-        //     this.removeAnim(this.walkRight)
-        //     this.addAnim(this.walkLeft)
-        // }
-        // else {
-        //     this.removeAnim(this.walkLeft)
-        //     this.removeAnim(this.walkRight)
-        //     this.addAnim(this.idleRight)
-        // }
+    async updatePlayer() {
+        await this.#setAnimation()
     }
 }

@@ -1,6 +1,6 @@
 import * as PIXI from "../pixi.min.mjs"
 
-const createAnimation = async (img, w, h, framesNum, animSpeed = .16) => {
+const createAnimation = async (img, w, h, framesCount, animSpeed = .16) => {
     const frameSize = 128
     const animFormat = {
         frames: {},
@@ -15,7 +15,7 @@ const createAnimation = async (img, w, h, framesNum, animSpeed = .16) => {
         }
     }
 
-    for (let i = 0; i < framesNum; i++) {
+    for (let i = 0; i < framesCount; i++) {
         const name = `frame${i}`
         animFormat.frames[name] = {
             frame: {x: frameSize * i, y: 0, w: frameSize, h: frameSize},

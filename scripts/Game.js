@@ -24,17 +24,26 @@ export default class Game {
     }
 
     async updateGame() {
+        this.player.oldDirection = this.player.direction
+        this.player.oldState = this.player.state
 
+        // Left
         if (keys[68]) {
-            this.player.status["LEFT"] = false
-            this.player.status["RIGHT"] = true
-            await this.player.walk()
+            if (this.player.state !== 'walk') this.player.state = 'walk'
+            if (!this.player.direction) this.player.direction = true
         }
+        // Right
         if (keys[65]) {
-            this.player.status["RIGHT"] = false
-            this.player.status["LEFT"] = true
-            await this.player.walk()
+            if (this.player.state !== 'walk') this.player.state = 'walk'
+            if (this.player.direction) this.player.direction = false
         }
-        this.player.status["RUN"] = keys[16]
+        // Run
+        if (keys[16] && this.player.state !== 'run') this.player.state = 'run'
+        // Idle
+        if (!keys[68] && !keys[65] && !keys[16]) {
+            if (this.player.state !== 'idle') this.player.state = 'idle'
+        }
+
+        await this.player.updatePlayer()
     }
 }
