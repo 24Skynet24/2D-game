@@ -21,7 +21,7 @@ export default class Game {
 
     async createGame() {
         this.#addBackground()
-        await this.player.createSamurai()
+        await this.player.createPlayer()
     }
 
     async updateGame() {

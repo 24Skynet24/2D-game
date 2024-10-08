@@ -23,10 +23,7 @@ export default class Samurai {
         this.sprite = null
     }
 
-    positionUpdate() {
-        this.sprite.x = this.x
-        this.sprite.y = this.y
-    }
+
     #animStart() {
         this.positionUpdate()
         this.sprite.play()
@@ -57,12 +54,10 @@ export default class Samurai {
         this.#animStart()
     }
 
-    async createSamurai() {
-        this.sprite = await createAnimation('images/samurai/Idle_right.png', 768, 128, 6)
-        this.positionUpdate()
-        this.sprite.zIndex = 2
-        this.sprite.play()
-        app.stage.addChild(this.sprite)
+
+    positionUpdate() {
+        this.sprite.x = this.x
+        this.sprite.y = this.y
     }
 
     jump() {
@@ -70,6 +65,15 @@ export default class Samurai {
             this.isJump = true
             this.verticalSpeed = this.jumpSpeed
         }
+    }
+
+
+    async createPlayer() {
+        this.sprite = await createAnimation('images/samurai/Idle_right.png', 768, 128, 6)
+        this.positionUpdate()
+        this.sprite.zIndex = 2
+        this.sprite.play()
+        app.stage.addChild(this.sprite)
     }
 
     async updatePlayer() {
