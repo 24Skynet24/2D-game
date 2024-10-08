@@ -1,6 +1,6 @@
 import * as PIXI from "./pixi.min.mjs"
 import assetsLoad from "./utils/assetsLoad.js"
-import {appSize, app} from "./utils/constants.js"
+import {appSize, app, entities} from "./utils/constants.js"
 import {setKey} from "./utils/keyboard.js"
 import Game from "./Game.js"
 import Samurai from "./entities/Samurai.js"
@@ -14,10 +14,13 @@ window.addEventListener("load", async () => {
 
     await assetsLoad()
 
-    const player = new Samurai(0, appSize.height - 48 - 128)
+    const player = new Samurai(0, entities.posY)
     const game = new Game(player)
     await game.createGame()
 
+    window.addEventListener('keydown', e => {
+        if (e.code === 'Space') player.jump()
+    })
     document.addEventListener('keydown', e => setKey(e.keyCode))
     document.addEventListener('keyup', e => setKey(e.keyCode, false))
 

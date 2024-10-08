@@ -7,7 +7,11 @@ const appSize = {
     height: 720,
 }
 
+const entities = {
+    posY: appSize.height - 48 - 128
+}
+
 export {
     app,
-    appSize,
+    appSize, entities
 }

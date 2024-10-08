@@ -1,11 +1,11 @@
 import * as PIXI from "./pixi.min.mjs"
-import {appSize, app} from "./utils/constants.js"
+import {appSize, app, entities} from "./utils/constants.js"
 import {keys, setKey} from "./utils/keyboard.js"
 
 export default class Game {
     constructor(player) {
         this.player = player
-        this.speed = 2
+        this.playerSpeed = 2
     }
 
     #addBackground() {
@@ -32,18 +32,29 @@ export default class Game {
         if (keys[68] && !keys[65]) {
             if (this.player.state !== 'walk') this.player.state = 'walk'
             if (!this.player.direction) this.player.direction = true
-            this.player.x += this.speed
+            this.player.x += this.playerSpeed
         }
         // Left
         if (keys[65] && !keys[68]) {
             if (this.player.state !== 'walk') this.player.state = 'walk'
             if (this.player.direction) this.player.direction = false
-            this.player.x -= this.speed
+            this.player.x -= this.playerSpeed
         }
         // Run
         if (keys[16] && this.player.state !== 'run' && (keys[65] || keys[68])) {
             this.player.state = 'run'
-            this.player.direction ? this.player.x += this.speed * 1.5 : this.player.x -= this.speed * 1.5
+            this.player.direction ? this.player.x += this.playerSpeed * 1.5 : this.player.x -= this.playerSpeed * 1.5
+        }
+        // Jump
+        if (this.player.isJump) {
+            this.player.y += this.player.verticalSpeed
+            this.player.verticalSpeed += this.player.gravity
+
+            if (this.player.y >= entities.posY) {
+                this.player.y = entities.posY
+                this.player.isJump = false
+                this.player.verticalSpeed = 0
+            }
         }
         // Idle
         if (!keys[68] && !keys[65]) {

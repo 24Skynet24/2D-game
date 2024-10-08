@@ -12,6 +12,11 @@ export default class Samurai {
         this.state = 'idle'  // idle, walk, run
         this.oldDirection = true
         this.direction = true  // right - true, left - false
+        this.isJump = false
+
+        this.verticalSpeed = 0
+        this.gravity = 0.5
+        this.jumpSpeed = -10
 
 
         // Animation
@@ -21,6 +26,11 @@ export default class Samurai {
     positionUpdate() {
         this.sprite.x = this.x
         this.sprite.y = this.y
+    }
+    #animStart() {
+        this.positionUpdate()
+        this.sprite.play()
+        app.stage.addChild(this.sprite)
     }
     async #setAnimation() {
         switch (this.state) {
@@ -44,12 +54,8 @@ export default class Samurai {
                 else this.sprite = await createAnimation('images/samurai/Run_left.png', 1024, 128, 8)
                 break
         }
-
-        this.positionUpdate()
-        this.sprite.play()
-        app.stage.addChild(this.sprite)
+        this.#animStart()
     }
-
 
     async createSamurai() {
         this.sprite = await createAnimation('images/samurai/Idle_right.png', 768, 128, 6)
@@ -57,6 +63,13 @@ export default class Samurai {
         this.sprite.zIndex = 2
         this.sprite.play()
         app.stage.addChild(this.sprite)
+    }
+
+    jump() {
+        if (!this.isJump) {
+            this.isJump = true
+            this.verticalSpeed = this.jumpSpeed
+        }
     }
 
     async updatePlayer() {
