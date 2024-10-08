@@ -5,6 +5,7 @@ import {keys, setKey} from "./utils/keyboard.js"
 export default class Game {
     constructor(player) {
         this.player = player
+        this.speed = 2
     }
 
     #addBackground() {
@@ -31,18 +32,18 @@ export default class Game {
         if (keys[68] && !keys[65]) {
             if (this.player.state !== 'walk') this.player.state = 'walk'
             if (!this.player.direction) this.player.direction = true
-            this.player.x += 1
+            this.player.x += this.speed
         }
         // Left
         if (keys[65] && !keys[68]) {
             if (this.player.state !== 'walk') this.player.state = 'walk'
             if (this.player.direction) this.player.direction = false
-            this.player.x -= 1
+            this.player.x -= this.speed
         }
         // Run
         if (keys[16] && this.player.state !== 'run' && (keys[65] || keys[68])) {
             this.player.state = 'run'
-            this.player.direction ? this.player.x += 2 : this.player.x -= 2
+            this.player.direction ? this.player.x += this.speed * 1.5 : this.player.x -= this.speed * 1.5
         }
         // Idle
         if (!keys[68] && !keys[65]) {
