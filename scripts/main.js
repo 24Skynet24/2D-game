@@ -24,6 +24,7 @@ window.addEventListener("load", async () => {
     document.addEventListener('keydown', e => setKey(e.keyCode))
     document.addEventListener('keyup', e => setKey(e.keyCode, false))
 
+    app.view.style.cursor = 'none'
     document.body.appendChild(app.view)
 
     app.ticker.add(await game.updateGame, game)
