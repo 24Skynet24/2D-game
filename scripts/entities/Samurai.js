@@ -10,14 +10,17 @@ export default class Samurai {
         // Statuses
         this.oldState = null
         this.state = 'idle'  // idle, walk, run
+
         this.oldDirection = true
         this.direction = true  // right - true, left - false
+
         this.isJump = false
 
         this.verticalSpeed = 0
         this.gravity = 0.5
         this.jumpSpeed = -10
 
+        this.isAttacking = false
 
         // Animation
         this.sprite = null
@@ -28,6 +31,14 @@ export default class Samurai {
         this.positionUpdate()
         this.sprite.play()
         app.stage.addChild(this.sprite)
+    }
+    #attackEnd(oldSprite) {
+        setTimeout(() => {
+            app.stage.removeChild(this.sprite)
+            this.isAttacking = false
+            this.sprite = oldSprite
+            this.#animStart()
+        }, 400)
     }
     async #setAnimation() {
         switch (this.state) {
@@ -64,6 +75,17 @@ export default class Samurai {
         if (!this.isJump) {
             this.isJump = true
             this.verticalSpeed = this.jumpSpeed
+        }
+    }
+    async attack() {
+        if (!this.isAttacking) {
+            const oldSprite = this.sprite
+            this.isAttacking = true
+            app.stage.removeChild(this.sprite)
+            if (this.direction) this.sprite = await createAnimation('images/samurai/Attack_3_right.png', 512, 128, 4, .15)
+            else this.sprite = await createAnimation('images/samurai/Attack_3_left.png', 512, 128, 4, .15)
+            this.#animStart()
+            this.#attackEnd(oldSprite)
         }
     }
 

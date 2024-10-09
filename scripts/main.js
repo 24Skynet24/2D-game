@@ -18,10 +18,11 @@ window.addEventListener("load", async () => {
     const game = new Game(player)
     await game.createGame()
 
-    window.addEventListener('keydown', e => {
+    app.view.addEventListener('click', async () => await player.attack())
+    document.addEventListener('keydown', e => {
+        setKey(e.keyCode)
         if (e.code === 'Space') player.jump()
     })
-    document.addEventListener('keydown', e => setKey(e.keyCode))
     document.addEventListener('keyup', e => setKey(e.keyCode, false))
 
     app.view.style.cursor = 'none'

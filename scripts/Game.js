@@ -57,9 +57,7 @@ export default class Game {
             }
         }
         // Idle
-        if (!keys[68] && !keys[65]) {
-            if (this.player.state !== 'idle') this.player.state = 'idle'
-        }
+        if (!keys[68] && !keys[65] && this.player.state !== 'idle') this.player.state = 'idle'
 
         this.player.positionUpdate()
         await this.player.updatePlayer()

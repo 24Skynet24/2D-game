@@ -21,6 +21,9 @@ export default async () => {
 
         'images/samurai/Run_right.png',
         'images/samurai/Run_left.png',
+
+        'images/samurai/Attack_3_right.png',
+        'images/samurai/Attack_3_left.png',
     ])
 }
 
