@@ -14,8 +14,9 @@ window.addEventListener("load", async () => {
 
     await assetsLoad()
 
-    const player = new Samurai(0, entities.posY)
-    const game = new Game(player)
+    const gameContainer = new PIXI.Container()
+    const player = new Samurai(0, entities.posY, gameContainer)
+    const game = new Game(player, gameContainer)
     await game.createGame()
 
     app.view.addEventListener('click', async () => await player.attack())

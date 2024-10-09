@@ -3,8 +3,9 @@ import {appSize, app, entities} from "./utils/constants.js"
 import {keys, setKey} from "./utils/keyboard.js"
 
 export default class Game {
-    constructor(player) {
+    constructor(player, container) {
         this.player = player
+        this.container = container
         this.playerSpeed = 2
     }
 
@@ -13,10 +14,12 @@ export default class Game {
         const floor = PIXI.Sprite.from( 'images/objects/floor.png')
         const trees = PIXI.Sprite.from('images/objects/trees.png')
 
+        app.stage.addChild(background, this.container)
+
         floor.y = appSize.height - 64
         trees.y = appSize.height - 64 - 322
 
-        app.stage.addChild(background, floor, trees)
+        this.container.addChild(floor, trees)
     }
 
     async createGame() {

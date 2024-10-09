@@ -3,7 +3,9 @@ import {createAnimation} from "../utils/createAnimation.js"
 import {app} from "../utils/constants.js"
 
 export default class Samurai {
-    constructor(x, y) {
+    constructor(x, y, container) {
+        this.container = container
+
         this.x = x
         this.y = y
 
@@ -30,11 +32,11 @@ export default class Samurai {
     #animStart() {
         this.positionUpdate()
         this.sprite.play()
-        app.stage.addChild(this.sprite)
+        this.container.addChild(this.sprite)
     }
     #attackEnd(oldSprite) {
         setTimeout(() => {
-            app.stage.removeChild(this.sprite)
+            this.container.removeChild(this.sprite)
             this.isAttacking = false
             this.sprite = oldSprite
             this.#animStart()
@@ -44,20 +46,20 @@ export default class Samurai {
         switch (this.state) {
             case 'walk':
                 if (this.oldState === 'walk' && this.oldDirection === this.direction) return
-                app.stage.removeChild(this.sprite)
+                this.container.removeChild(this.sprite)
                 if (this.direction) this.sprite = await createAnimation('images/samurai/Walk_right.png', 1152, 128, 9)
                 else this.sprite = await createAnimation('images/samurai/Walk_left.png', 1152, 128, 9)
                 break
 
             case 'idle':
                 if (this.oldState === 'idle') return
-                app.stage.removeChild(this.sprite)
+                this.container.removeChild(this.sprite)
                 if (this.direction) this.sprite = await createAnimation('images/samurai/Idle_right.png', 768, 128, 6)
                 else this.sprite = await createAnimation('images/samurai/Idle_left.png', 768, 128, 6)
                 break
             case 'run':
                 if (this.oldState === 'run') return
-                app.stage.removeChild(this.sprite)
+                this.container.removeChild(this.sprite)
                 if (this.direction) this.sprite = await createAnimation('images/samurai/Run_right.png', 1024, 128, 8)
                 else this.sprite = await createAnimation('images/samurai/Run_left.png', 1024, 128, 8)
                 break
@@ -81,7 +83,7 @@ export default class Samurai {
         if (!this.isAttacking) {
             const oldSprite = this.sprite
             this.isAttacking = true
-            app.stage.removeChild(this.sprite)
+            this.container.removeChild(this.sprite)
             if (this.direction) this.sprite = await createAnimation('images/samurai/Attack_3_right.png', 512, 128, 4, .15)
             else this.sprite = await createAnimation('images/samurai/Attack_3_left.png', 512, 128, 4, .15)
             this.#animStart()
@@ -95,7 +97,7 @@ export default class Samurai {
         this.positionUpdate()
         this.sprite.zIndex = 2
         this.sprite.play()
-        app.stage.addChild(this.sprite)
+        this.container.addChild(this.sprite)
     }
 
     async updatePlayer() {
