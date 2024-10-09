@@ -22,6 +22,13 @@ export default class Game {
         this.container.addChild(floor, trees)
     }
 
+    // cameraMove() {
+    //     const halfWidth = appSize.width / 2
+    //     if (this.player.x >= halfWidth) {
+    //         this.container.x = -halfWidth
+    //     }
+    // }
+
     async createGame() {
         this.#addBackground()
         await this.player.createPlayer()
@@ -64,5 +71,8 @@ export default class Game {
 
         this.player.positionUpdate()
         await this.player.updatePlayer()
+
+
+        // this.cameraMove()
     }
 }
