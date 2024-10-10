@@ -9,7 +9,14 @@ export default class Samurai {
         this.x = x
         this.y = y
 
-        // Statuses
+        this.params = {
+            maxHeart: 100,
+            currentHeart: 100,
+
+            speed: 2,
+        }
+
+        // Statuses (DEV)
         this.oldState = null
         this.state = 'idle'  // idle, walk, run
 

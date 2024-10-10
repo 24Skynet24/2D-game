@@ -6,7 +6,6 @@ export default class Game {
     constructor(player, container) {
         this.player = player
         this.container = container
-        this.playerSpeed = 2
     }
 
     #addBackground() {
@@ -42,18 +41,20 @@ export default class Game {
         if (keys[68] && !keys[65]) {
             if (this.player.state !== 'walk') this.player.state = 'walk'
             if (!this.player.direction) this.player.direction = true
-            this.player.x += this.playerSpeed
+            this.player.x += this.player.params.speed
         }
         // Left
         if (keys[65] && !keys[68]) {
             if (this.player.state !== 'walk') this.player.state = 'walk'
             if (this.player.direction) this.player.direction = false
-            this.player.x -= this.playerSpeed
+            this.player.x -= this.player.params.speed
         }
         // Run
         if (keys[16] && this.player.state !== 'run' && (keys[65] || keys[68])) {
             this.player.state = 'run'
-            this.player.direction ? this.player.x += this.playerSpeed * 1.5 : this.player.x -= this.playerSpeed * 1.5
+            this.player.direction ?
+                this.player.x += this.player.params.speed * 1.5 :
+                this.player.x -= this.player.params.speed * 1.5
         }
         // Jump
         if (this.player.isJump) {
