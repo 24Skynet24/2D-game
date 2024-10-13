@@ -60,6 +60,9 @@ export default class Game {
             }
         }
     }
+    #checkPlayerIdle() {
+        if (!keys[68] && !keys[65] && this.player.state !== 'idle') this.player.state = 'idle'
+    }
 
     // cameraMove() {
     //     const halfWidth = appSize.width / 2
@@ -73,14 +76,13 @@ export default class Game {
         await this.player.createPlayer()
     }
     async updateGame() {
+        // Player
         this.player.oldDirection = this.player.direction
         this.player.oldState = this.player.state
         this.#checkPlayerWalk()
         this.#checkPlayerRun()
         this.#checkPlayerJump()
-        // Idle
-        if (!keys[68] && !keys[65] && this.player.state !== 'idle') this.player.state = 'idle'
-
+        this.#checkPlayerIdle()
         this.player.positionUpdate()
         await this.player.updatePlayer()
 
