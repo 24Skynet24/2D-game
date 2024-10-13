@@ -10,9 +10,6 @@ export default class Samurai {
         this.y = y
 
         this.params = {
-            maxHeart: 100,
-            currentHeart: 100,
-
             speed: 2,
         }
 

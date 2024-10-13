@@ -4,7 +4,7 @@ import {appSize, app, entities} from "./utils/constants.js"
 import {setKey} from "./utils/keyboard.js"
 import Game from "./Game.js"
 import Samurai from "./entities/Samurai.js"
-
+import GameInterface from "./GameInterface.js"
 
 window.addEventListener("load", async () => {
     await app.init({
@@ -14,9 +14,10 @@ window.addEventListener("load", async () => {
 
     await assetsLoad()
 
+    const gameInterface = new GameInterface()
     const gameContainer = new PIXI.Container()
     const player = new Samurai(0, entities.posY, gameContainer)
-    const game = new Game(player, gameContainer)
+    const game = new Game(player, gameContainer, gameInterface)
     await game.createGame()
 
     app.view.addEventListener('click', async () => await player.attack())
