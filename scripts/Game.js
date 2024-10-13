@@ -62,6 +62,12 @@ export default class Game {
         if (!keys[68] && !keys[65] && this.player.state !== 'idle') this.player.state = 'idle'
     }
 
+    #playerStaminaRegeneration() {
+        if (this.player.params.stamina.current < this.player.params.stamina.max)
+            this.player.params.stamina.current += .01
+        else this.player.params.stamina.current = this.player.params.stamina.max
+    }
+
     // cameraMove() {
     //     const halfWidth = appSize.width / 2
     //     if (this.player.x >= halfWidth) {
@@ -84,6 +90,8 @@ export default class Game {
         this.#checkPlayerIdle()
         this.player.positionUpdate()
         await this.player.updatePlayer()
+
+        this.#playerStaminaRegeneration()
         this.gameInterface.playerUpdate()
         // this.cameraMove()
     }

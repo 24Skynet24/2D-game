@@ -43,7 +43,7 @@ export default class Samurai {
 
 
     #attackStamina() {
-        if (this.params.stamina.current <= 0) return
+        if (this.params.stamina.current < 0) return
         this.params.stamina.current -= 3
     }
     #animStart() {
