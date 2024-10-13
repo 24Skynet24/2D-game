@@ -2,9 +2,7 @@ import * as PIXI from "./pixi.min.mjs"
 import assetsLoad from "./utils/assetsLoad.js"
 import {appSize, app, entities} from "./utils/constants.js"
 import {setKey} from "./utils/keyboard.js"
-import Game from "./Game.js"
-import Samurai from "./entities/Samurai.js"
-import GameInterface from "./GameInterface.js"
+import GameFactory from "./GameFactory.js"
 
 window.addEventListener("load", async () => {
     await app.init({
@@ -14,11 +12,13 @@ window.addEventListener("load", async () => {
 
     await assetsLoad()
 
-    const gameInterface = new GameInterface()
-    const gameContainer = new PIXI.Container()
-    const player = new Samurai(0, entities.posY, gameContainer)
-    const game = new Game(player, gameContainer, gameInterface)
-    await game.createGame()
+    const gameFactory = new GameFactory()
+
+    const gameInterface = gameFactory.createInterface()
+    const gameContainer = gameFactory.createContainer()
+    const player = gameFactory.createPlayer(gameContainer, gameInterface)
+    const game = gameFactory.createGame(player, gameContainer, gameInterface)
+    await game.gameStart()
 
     app.view.addEventListener('click', async () => await player.attack())
     document.addEventListener('keydown', e => {

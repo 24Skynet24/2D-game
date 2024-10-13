@@ -3,14 +3,16 @@ import {createAnimation} from "../utils/createAnimation.js"
 import {app} from "../utils/constants.js"
 
 export default class Samurai {
-    constructor(x, y, container) {
+    constructor(x, y, container, gameInterface) {
         this.container = container
 
         this.x = x
         this.y = y
 
+        // Statuses (Player)
         this.params = {
             speed: 2,
+            ...gameInterface
         }
 
         // Statuses (DEV)

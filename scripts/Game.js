@@ -7,8 +7,6 @@ export default class Game {
         this.player = player
         this.container = container
         this.gameInterface = gameInterface
-
-        Object.assign(this.player.params, gameInterface)
     }
 
     #addBackground() {
@@ -71,8 +69,9 @@ export default class Game {
     //     }
     // }
 
-    async createGame() {
+    async gameStart() {
         this.#addBackground()
+        this.gameInterface.addInterface()
         await this.player.createPlayer()
     }
     async updateGame() {

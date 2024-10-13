@@ -1,6 +1,6 @@
-import * as PIXI from "./pixi.min.mjs"
-import {app} from "./utils/constants.js"
-import {ObservablePoint} from "./pixi.min.mjs";
+import * as PIXI from "../pixi.min.mjs"
+import {app} from "../utils/constants.js"
+import {ObservablePoint} from "../pixi.min.mjs";
 
 export default class GameInterface {
     #healthBar
@@ -81,7 +81,7 @@ export default class GameInterface {
 
     }
 
-    createInterface(){
+    addInterface(){
         this.#addHeartBar()
         this.#addStaminaBar()
     }
