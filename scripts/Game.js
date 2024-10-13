@@ -84,8 +84,7 @@ export default class Game {
         this.#checkPlayerIdle()
         this.player.positionUpdate()
         await this.player.updatePlayer()
-
-
+        this.gameInterface.playerUpdate()
         // this.cameraMove()
     }
 }

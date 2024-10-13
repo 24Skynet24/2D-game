@@ -11,16 +11,12 @@ export default class GameInterface {
     #staminaOuterBar
     #staminaInnerBar
 
-    constructor() {
-        // Health
-        this.currentHealth = 200
-        this.maxHealth = 200
-        // Stamina
-        this.currentStamina = 100
-        this.maxStamina = 100
+    constructor(health, stamina) {
+        this.health = health
+        this.stamina = stamina
     }
 
-    #addHeartBar() {
+    #addHealthBar() {
         this.#healthBar = new PIXI.Container()
         this.#healthBar.x = 16
         this.#healthBar.y = 16
@@ -39,17 +35,6 @@ export default class GameInterface {
         this.#healthBar.addChild(this.#healthOuterBar, this.#healthInnerBar)
         app.stage.addChild(this.#healthBar)
     }
-    setCurrentHealth(health) {
-        if (health > this.currentHealth) this.currentHealth = this.maxHealth
-        this.currentHealth += health
-        if (this.currentHealth < 0) this.currentHealth = 0
-        this.#healthInnerBar.width = this.currentHealth
-    }
-    setMaxHealth(health) {
-        if (health <= 0) return
-        this.maxHealth = health
-    }
-
     #addStaminaBar() {
         this.#staminaBar = new PIXI.Container()
         this.#staminaBar.x = 16
@@ -69,20 +54,24 @@ export default class GameInterface {
         this.#staminaBar.addChild(this.#staminaOuterBar, this.#staminaInnerBar)
         app.stage.addChild(this.#staminaBar)
     }
-    setCurrentStamina(stamina) {
-        if (stamina > this.currentStamina) this.currentStamina = this.maxStamina
-        this.currentStamina += stamina
-        if (this.currentStamina < 0) this.currentStamina = 0
-        this.#staminaInnerBar.width = this.currentStamina
-    }
-    setMaxStamina(stamina) {
-        if (stamina <= 0) return
-        this.maxStamina = stamina
 
+    setPlayerCurrentParam(param) {
+        if (param !== "health" && param !== "stamina") return
+
+        if (param === "health") this.#healthInnerBar.width = this[param].current
+        if (param === "stamina") this.#staminaInnerBar.width = this.stamina.current
     }
+
+
+    playerUpdate(){
+        if (this.stamina.current !== this.stamina.max) {
+            this.setPlayerCurrentParam("stamina")
+        }
+    }
+
 
     addInterface(){
-        this.#addHeartBar()
+        this.#addHealthBar()
         this.#addStaminaBar()
     }
 }

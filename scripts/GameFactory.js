@@ -5,14 +5,14 @@ import {Container} from "./pixi.min.mjs"
 import {entities} from "./utils/constants.js"
 
 export default class GameFactory {
-    createInterface() {
-        return new GameInterface()
+    createInterface(health, stamina) {
+        return new GameInterface(health, stamina)
     }
     createContainer() {
         return new Container()
     }
-    createPlayer(container, gameInterface) {
-        return new Samurai(0, entities.posY, container, gameInterface)
+    createPlayer(container) {
+        return new Samurai(0, entities.posY, container)
     }
     createGame(player, container, gameInterface) {
         return new Game(player, container, gameInterface)

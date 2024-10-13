@@ -3,7 +3,7 @@ import {createAnimation} from "../utils/createAnimation.js"
 import {app} from "../utils/constants.js"
 
 export default class Samurai {
-    constructor(x, y, container, gameInterface) {
+    constructor(x, y, container) {
         this.container = container
 
         this.x = x
@@ -12,7 +12,14 @@ export default class Samurai {
         // Statuses (Player)
         this.params = {
             speed: 2,
-            ...gameInterface
+            health: {
+                current: 200,
+                max: 200,
+            },
+            stamina: {
+                current: 100,
+                max: 100,
+            },
         }
 
         // Statuses (DEV)
@@ -35,6 +42,10 @@ export default class Samurai {
     }
 
 
+    #attackStamina() {
+        if (this.params.stamina.current <= 0) return
+        this.params.stamina.current -= 3
+    }
     #animStart() {
         this.positionUpdate()
         this.sprite.play()
@@ -94,6 +105,7 @@ export default class Samurai {
             else this.sprite = await createAnimation('images/samurai/Attack_3_left.png', 512, 128, 4, .15)
             this.#animStart()
             this.#attackEnd(oldSprite)
+            this.#attackStamina()
         }
     }
 

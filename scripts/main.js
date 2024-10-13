@@ -14,9 +14,9 @@ window.addEventListener("load", async () => {
 
     const gameFactory = new GameFactory()
 
-    const gameInterface = gameFactory.createInterface()
     const gameContainer = gameFactory.createContainer()
-    const player = gameFactory.createPlayer(gameContainer, gameInterface)
+    const player = gameFactory.createPlayer(gameContainer)
+    const gameInterface = gameFactory.createInterface(player.params.health, player.params.stamina)
     const game = gameFactory.createGame(player, gameContainer, gameInterface)
     await game.gameStart()
 
