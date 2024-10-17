@@ -11,7 +11,7 @@ export default class Samurai {
 
         // Statuses (Player)
         this.params = {
-            speed: 2,
+            speed: 3,
             health: {
                 current: 200,
                 max: 200,
