@@ -68,12 +68,9 @@ export default class Game {
         else this.player.params.stamina.current = this.player.params.stamina.max
     }
 
-    // cameraMove() {
-    //     const halfWidth = appSize.width / 2
-    //     if (this.player.x >= halfWidth) {
-    //         this.container.x = -halfWidth
-    //     }
-    // }
+    cameraMove() {
+        this.container.x = entities.posX - this.player.x
+    }
 
     async gameStart() {
         this.#addBackground()
@@ -93,6 +90,6 @@ export default class Game {
 
         this.#playerStaminaRegeneration()
         this.gameInterface.playerUpdate()
-        // this.cameraMove()
+        this.cameraMove()
     }
 }
