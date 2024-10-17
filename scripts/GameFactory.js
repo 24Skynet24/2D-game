@@ -12,7 +12,7 @@ export default class GameFactory {
         return new Container()
     }
     createPlayer(container) {
-        return new Samurai(0, entities.posY, container)
+        return new Samurai(entities.posX, entities.posY, container)
     }
     createGame(player, container, gameInterface) {
         return new Game(player, container, gameInterface)

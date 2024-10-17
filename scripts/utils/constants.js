@@ -8,7 +8,8 @@ const appSize = {
 }
 
 const entities = {
-    posY: appSize.height - 48 - 128
+    posY: appSize.height - 48 - 128,
+    posX: appSize.width / 2 - 128
 }
 
 export {
